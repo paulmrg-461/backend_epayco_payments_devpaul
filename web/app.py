@@ -226,18 +226,18 @@ def pse_payment():
             "tax":                          posted_data['tax'],
             "tax_base":                     posted_data['tax_base'],
             "currency":                     posted_data['currency'],
-            "type_person":                  '0',
             "doc_type":                     posted_data['doc_type'],
             "doc_number":                   posted_data['doc_number'],
             "name":                         posted_data['name'],            
             "last_name":                    posted_data['last_name'], 
             "email":                        posted_data['email'],
-            "country":                      'CO',
             "cell_phone":                   posted_data['cell_phone'],
             "ip":                           posted_data['ip'],
             "url_response":                 posted_data['url_response'],
             "url_confirmation":             posted_data['url_confirmation'],
-            "metodoconfirmacion":           posted_data['metodoconfirmacion']
+            "metodoconfirmacion":           posted_data['metodoconfirmacion'],
+            "country":                      'CO',
+            "type_person":                  '0',
         }
         return objepayco.bank.create(pse_info)
     
