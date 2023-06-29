@@ -31,6 +31,7 @@ def create_token_card(posted_data):
         "card[exp_month]":  posted_data['card_exp_month'],
         "card[cvc]":        posted_data['card_cvc']
     }
+    print(str(card_info), file=sys.stderr)    
     return objepayco.token.create(card_info)
 
 def create_customer(posted_data, token_card):  
@@ -42,6 +43,7 @@ def create_customer(posted_data, token_card):
         "phone":      posted_data['phone'],
         "default":    True        
     }
+    print(str(customer_info), file=sys.stderr)
     return objepayco.customer.create(customer_info)
 
 def create_subscription(posted_data, token_card, customer):
@@ -133,7 +135,8 @@ def credit_card_payment():
             posted_data = posted_data
         )
         if(create_card_response['success'] != True):
-            error_message='Create token card error.'
+            error_message = 'Create token card error.'
+            print(error_message, file=sys.stderr)
             return jsonify(error_response)
         
         token_card = create_card_response['id']
@@ -144,6 +147,7 @@ def credit_card_payment():
         )
         if(create_customer_response['success'] != True):
             error_message='Create customer error.'
+            print(error_message, file=sys.stderr)
             return jsonify(error_response)
         
         customer_id = create_customer_response['data']['customerId']
@@ -166,9 +170,10 @@ def credit_card_payment():
             "ip":                           posted_data['ip'],
             "url_response":                 posted_data['url_response'],
             "url_confirmation":             posted_data['url_confirmation'],
-            "method_confirmation":          posted_data['method_confirmation'],
+            "method_confirmation":          'GET',
             "use_default_card_customer":    True
         }
+        print(str(payment_info), file=sys.stderr)
         return objepayco.charge.create(payment_info)
     
     except Exception as ex:
@@ -231,7 +236,7 @@ def pse_payment():
             "name":                         posted_data['name'],            
             "last_name":                    posted_data['last_name'], 
             "email":                        posted_data['email'],
-            "cell_phone":                   posted_data['cell_phone'],
+            "cell_phone":                   posted_data['phone'],
             "ip":                           posted_data['ip'],
             "url_response":                 posted_data['url_response'],
             "url_confirmation":             posted_data['url_confirmation'],
@@ -309,7 +314,7 @@ def cash_payment():
             "name":                         posted_data['name'],            
             "last_name":                    posted_data['last_name'], 
             "email":                        posted_data['email'],
-            "cell_phone":                   posted_data['cell_phone'],
+            "cell_phone":                   posted_data['phone'],
             "ip":                           posted_data['ip'],
             "url_response":                 posted_data['url_response'],
             "url_confirmation":             posted_data['url_confirmation'],
